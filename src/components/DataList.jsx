@@ -26,20 +26,23 @@ class DataList extends Component {
 
   handleScroll(e) {
     if(window.document.body.offsetHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
-      console.log(window.document.body.offsetHeight, window.scrollY, ' so were loading')
       this.loadItems()
     }
   }
 
   loadItems() {
     const limit = 15
-    var uri = `https://portfolium.com/proxy/entries/expert?limit=${limit}&offset=${this.state.projects.length}&sort=recent`
+    var uri = `${this.props.endPoint}?limit=${limit}&offset=${this.state.projects.length}&sort=recent`
     this.setState({fetching:true})
     fetch(uri)
       .then(res => res.json())
       .then((projects) => {
         this.setState({projects:this.state.projects.concat(projects), fetching: false})
-      })    
+      })
+      .catch((err) => {
+        // if our scroll fails, reset fetching status to allow infini-scroll to try again
+        this.setState({fetching:false})
+      })   
   }
 
   render() {

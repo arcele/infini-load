@@ -7,8 +7,9 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div>
-          infini-load
-          <DataList />
+          <img src="/logo_portfolium_blue.svg" style={{marginLeft:"15px", marginRight:"5px"}}/>
+          <span style={{fontSize:"28px", fontWeight:300}}>Projects</span>
+          <DataList endPoint="https://portfolium.com/proxy/entries/expert" />
         </div>
       </MuiThemeProvider>
     );

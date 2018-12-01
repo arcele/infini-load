@@ -21,6 +21,14 @@ class DataList extends Component {
 
   componentDidMount() {
     this.loadItems()
+    window.addEventListener('scroll', this.handleScroll.bind(this))
+  }
+
+  handleScroll(e) {
+    if(window.document.body.offsetHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
+      console.log(window.document.body.offsetHeight, window.scrollY, ' so were loading')
+      this.loadItems()
+    }
   }
 
   loadItems() {
@@ -30,11 +38,9 @@ class DataList extends Component {
     fetch(uri)
       .then(res => res.json())
       .then((projects) => {
-        console.log('heres projects:', projects)
-        this.setState({projects:projects, fetching: false})
+        this.setState({projects:this.state.projects.concat(projects), fetching: false})
       })    
   }
-
 
   render() {
     return(

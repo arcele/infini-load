@@ -37,7 +37,6 @@ class DataList extends Component {
 
 
   render() {
-
     return(
         <Table>
           <TableHeader>
@@ -50,7 +49,15 @@ class DataList extends Component {
           <TableBody>
             { this.state.projects.map(project => (
                 <TableRow key={project.id}>
-                  <TableRowColumn>?</TableRowColumn>
+                  <TableRowColumn>
+                    { project.profile && project.profile.cover && 
+                      <img
+                        src={project.profile.cover.url}
+                        height={75}
+                        alt={project.slug}
+                      />
+                    }
+                  </TableRowColumn>
                   <TableRowColumn>{project.title}</TableRowColumn>
                   <TableRowColumn>{project.description}</TableRowColumn>
                 </TableRow>

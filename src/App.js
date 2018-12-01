@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            infini-load v.000001 pre-alpha
-          </p>
-        </header>
-      </div>
+      <MuiThemeProvider>
+        infini-load
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Cover Image</TableHeaderColumn>
+              <TableHeaderColumn>Title</TableHeaderColumn>
+              <TableHeaderColumn>Description</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableRowColumn>Some Image</TableRowColumn>
+              <TableRowColumn>Descriptive Title</TableRowColumn>
+              <TableRowColumn>Detailed Description</TableRowColumn>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </MuiThemeProvider>
     );
   }
 }

@@ -48,14 +48,14 @@ class DataList extends Component {
   render() {
     return(
         <Table>
-          <TableHeader>
+          <TableHeader displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Cover Image</TableHeaderColumn>
               <TableHeaderColumn>Title</TableHeaderColumn>
               <TableHeaderColumn>Description</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody displayRowCheckbox={false}>
             { this.state.projects.map(project => (
                 <TableRow key={project.id}>
                   <TableRowColumn>

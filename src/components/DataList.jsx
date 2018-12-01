@@ -15,7 +15,7 @@ class DataList extends Component {
     super(props)
     this.state = {
       fetching: false,
-      projects: []
+      items: []
     }
   }
 
@@ -31,13 +31,12 @@ class DataList extends Component {
   }
 
   loadItems() {
-    const limit = 15
-    var uri = `${this.props.endPoint}?limit=${limit}&offset=${this.state.projects.length}&sort=recent`
+    var uri = `${this.props.endPoint}?limit=${this.props.limit}&offset=${this.state.items.length}&sort=recent`
     this.setState({fetching:true})
     fetch(uri)
       .then(res => res.json())
-      .then((projects) => {
-        this.setState({projects:this.state.projects.concat(projects), fetching: false})
+      .then((items) => {
+        this.setState({items:this.state.items.concat(items), fetching: false})
       })
       .catch((err) => {
         // if our scroll fails, reset fetching status to allow infini-scroll to try again
@@ -45,30 +44,39 @@ class DataList extends Component {
       })   
   }
 
+  columnData(project, column) {
+    const tokenizedDataKey = column.dataKey.split('.')
+    let output = project[column.dataKey]
+    if(tokenizedDataKey.length > 1) {
+      // support iterating into an object
+      output = tokenizedDataKey.reduce((obj, key, i) => {
+        return (i===1 ? project[obj][key] : obj[key])
+      })
+    }
+    if(column.asImage) {
+      return(<img height={75} src={output} alt={tokenizedDataKey[tokenizedDataKey.length-1]} />)
+    }
+    return output
+  }
+
   render() {
     return(
         <Table>
           <TableHeader displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn>Cover Image</TableHeaderColumn>
-              <TableHeaderColumn>Title</TableHeaderColumn>
-              <TableHeaderColumn>Description</TableHeaderColumn>
+              { this.props.columns.map(column => (
+                  <TableHeaderColumn key={'header-' + column.dataKey}>{column.header}</TableHeaderColumn>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            { this.state.projects.map(project => (
-                <TableRow key={project.id}>
-                  <TableRowColumn>
-                    { project.profile && project.profile.cover && 
-                      <img
-                        src={project.profile.cover.url}
-                        height={75}
-                        alt={project.slug}
-                      />
-                    }
-                  </TableRowColumn>
-                  <TableRowColumn>{project.title}</TableRowColumn>
-                  <TableRowColumn>{project.description}</TableRowColumn>
+            { this.state.items.map(item => (
+                <TableRow key={item.id}>
+                    {this.props.columns.map(column=> {
+                      return(
+                        <TableRowColumn key={item.id}>{this.columnData(item, column)}</TableRowColumn>
+                      )
+                    })}
                 </TableRow>
               )) 
             }

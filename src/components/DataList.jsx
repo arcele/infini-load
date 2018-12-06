@@ -30,13 +30,27 @@ class DataList extends Component {
     }
   }
 
+  processItems(items) {
+    // Return the results minus anything with a matching id to an item in the state
+    return items.filter((item) => {
+      let matched = false
+      this.state.items.forEach((stateItem) => {
+        if(stateItem.id === item.id) {
+          matched = true
+        }
+      })
+      return !matched
+    })
+  }
+
   loadItems() {
     var uri = `${this.props.endPoint}?limit=${this.props.limit}&offset=${this.state.items.length}&sort=recent`
     this.setState({fetching:true})
     fetch(uri)
       .then(res => res.json())
       .then((items) => {
-        this.setState({items:this.state.items.concat(items), fetching: false})
+        let newItems = this.state.items.slice().concat(this.processItems(items))
+        this.setState({items:newItems, fetching: false})
       })
       .catch((err) => {
         // if our scroll fails, reset fetching status to allow infini-scroll to try again

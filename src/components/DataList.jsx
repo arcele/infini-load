@@ -8,6 +8,10 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Toggle from 'material-ui/Toggle';
+
 
 class DataList extends Component {
 
@@ -73,8 +77,8 @@ class DataList extends Component {
     return output
   }
 
-  render() {
-    return(
+  renderTable() {
+      return(
         <Table>
           <TableHeader displaySelectAll={false}>
             <TableRow>
@@ -104,6 +108,35 @@ class DataList extends Component {
             }
           </TableBody>
         </Table>
+      )
+  }
+
+  renderCard(item) {
+    return(
+        <Card key={item.id} expanded={true} className="item-card">         
+          <CardMedia overlay={<CardTitle title={item.title} subtitle={item.description} />} expandable={true}>
+            <img src={item.profile.cover.url} />
+          </CardMedia>
+        </Card>
+    )
+  }
+
+  render() {
+    return(
+      <div>
+        { this.state.items.map(item => (
+              this.renderCard(item)
+            )
+          )
+        }
+      { this.state.fetching && 
+        <Card>
+          <CardMedia>
+            <CircularProgress className="spinner" size={125} thickness={10} />
+          </CardMedia>
+        </Card>
+      }
+      </div>
     )
   }
 }

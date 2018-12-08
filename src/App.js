@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DataList from './components/DataList'
+import './App.css';
 
 class App extends Component {
   render() {
@@ -12,13 +13,15 @@ class App extends Component {
       {'header':'Title', 'dataKey': 'title'},
       {'header':'Description', 'dataKey': 'description'}
     ]
+    const first = 0
 
     return (
       <MuiThemeProvider>
         <div>
-          <img src="/logo_portfolium_blue.svg" alt="Portfolium" style={{marginLeft:"15px", marginRight:"5px"}}/>
-          <span style={{fontSize:"28px", fontWeight:300}}>Projects</span>
-          <DataList endPoint={endPoint} limit={limit} columns={columns} />
+          <img src="/logo_portfolium_blue.svg" alt="Portfolium" className="logo" />
+          <div className="dataListWrapper">
+            <DataList endPoint={endPoint} limit={limit} first={first} columns={columns} />
+          </div>
         </div>
       </MuiThemeProvider>
     );

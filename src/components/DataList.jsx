@@ -83,41 +83,7 @@ class DataList extends Component {
     }
     return output
   }
-
-  renderTable() {
-      return(
-        <Table>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              { this.props.columns.map(column => (
-                  <TableHeaderColumn key={'header-' + column.dataKey}>{column.header}</TableHeaderColumn>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            { this.state.items.map(item => (
-                <TableRow key={item.id}>
-                    {this.props.columns.map(column=> {
-                      return(
-                        <TableRowColumn key={item.id}>{this.columnData(item, column)}</TableRowColumn>
-                      )
-                    })}
-                </TableRow>
-              )) 
-            }
-            { this.state.fetching && 
-              <TableRow key='loading'>
-                <TableRowColumn>&nbsp;</TableRowColumn>
-                <TableRowColumn>
-                  <CircularProgress size={50} thickness={5} />
-                </TableRowColumn>
-              </TableRow>
-            }
-          </TableBody>
-        </Table>
-      )
-  }
-
+  
   renderCard(item) {
     return(
       <div key={item.id}>

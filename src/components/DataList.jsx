@@ -1,12 +1,4 @@
 import React, { Component } from "react";
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress';
 import {Card, CardMedia, CardTitle } from 'material-ui/Card';
 import SortIcon from 'material-ui/svg-icons/content/sort'
@@ -83,7 +75,7 @@ class DataList extends Component {
     }
     return output
   }
-  
+
   renderCard(item) {
     return(
       <div key={item.id}>

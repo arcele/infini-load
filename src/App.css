@@ -10,6 +10,13 @@
 
 .item-card {
   margin:8px 0px;
+  height:275px;
+}
+
+.item-card img.cover {
+  height:275px;
+  width:100%;
+  object-fit: cover;
 }
 
 .dataListWrapper {

@@ -78,7 +78,7 @@ class DataList extends Component {
       <div key={item.id}>
         <Card expanded={true} className="item-card">         
           <CardMedia overlay={<CardTitle title={item.title} subtitle={item.description} />} expandable={true}>
-            <img src={item.profile.cover.url} alt={item.title} />
+            <img src={item.profile.cover.url} alt={item.title} className="cover" />
           </CardMedia>
         </Card>
       </div>

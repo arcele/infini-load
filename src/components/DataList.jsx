@@ -13,6 +13,7 @@ import SortIcon from 'material-ui/svg-icons/content/sort'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 
 
 class DataList extends Component {
@@ -139,40 +140,50 @@ class DataList extends Component {
 
   renderFilters() {
     return(
-      <Card>
-        <IconMenu iconButtonElement={<IconButton><SortIcon /></IconButton>}
-          onChange={this.handleFilterChange.bind(this)}
-          value={this.state.sort}
-        >
-          { this.props.sorts.map((sort, i) => {
-            return(
-              <MenuItem key={`sort-${i}`}value={i} primaryText={sort} />
-            )
-          }) }
-        </IconMenu>
-        <span>Sorted By {this.props.sorts[this.state.sort]}</span>
-      </Card>
+      <Toolbar className="toolbar">
+        <ToolbarGroup firstChild={true}>
+          <IconMenu iconButtonElement={<IconButton><SortIcon/></IconButton>}
+            onChange={this.handleFilterChange.bind(this)}
+            value={this.state.sort}
+          >
+            { this.props.sorts.map((sort, i) => {
+              return(
+                <MenuItem key={`sort-${i}`}value={i} primaryText={sort} />
+              )
+            }) }
+          </IconMenu>
+          <ToolbarTitle text={ "Sorted By " + this.props.sorts[this.state.sort]} />
+          
+        </ToolbarGroup>
+      </Toolbar>
     )
   }
 
   render() {
     return(
       <div>
-        { this.renderFilters() }
-        { this.state.items.map(item => (
-              this.renderCard(item)
+        <div className="header">
+          <div className="wrapper">
+            <img src="/logo_portfolium_blue.svg" alt="Portfolium" className="logo" />
+            { this.renderFilters() }
+          </div>
+        </div>
+       <div className="dataListWrapper">
+         { this.state.items.map(item => (
+                this.renderCard(item)
+              )
             )
-          )
-        }
-      { this.state.fetching && 
-        <Card>
-          <CardMedia>
-            <div>
-              <CircularProgress className="spinner" size={125} thickness={10} />
-            </div>
-          </CardMedia>
-        </Card>
-      }
+          }
+          { this.state.fetching && 
+            <Card>
+              <CardMedia>
+                <div>
+                  <CircularProgress className="spinner" size={125} thickness={10} />
+                </div>
+              </CardMedia>
+            </Card>
+          }
+        </div>
       </div>
     )
   }

@@ -22,10 +22,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div id="App">
-          <img src="/logo_portfolium_blue.svg" alt="Portfolium" className="logo" />
-          <div className="dataListWrapper">
-            <DataList endPoint={endPoint} limit={limit} first={first} columns={columns} sorts={sortColumns} />
-          </div>
+          <DataList endPoint={endPoint} limit={limit} first={first} columns={columns} sorts={sortColumns} />
         </div>
       </MuiThemeProvider>
     );

@@ -1,22 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# infini-load component
+This project contains a simple reusable react component to support infinite loading, with the App.jsx using an api from Portfolium as an example
 
-In the project directory, you can run:
-
+## To Run In Development Mode
+Clone this Repo
+### `npm install`
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+app will be available locally at http://localhost:3000
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
+## To Build a Production Build
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
@@ -27,18 +22,12 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Component Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The `DataList` component takes in the following arguments:
+- endPoint - url for the end point to pull data from
+- limit - number of elements to pull at a time
+- columns - array of objects representing the data to be pulled from the end point
+  - header - Header text to display in the table
+  - dataKey - key to use from the top level item, `.` can be used to go deeper into the object
+  - asImage - if true an img with the returned value as the src is returned

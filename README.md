@@ -31,3 +31,4 @@ The `DataList` component takes in the following arguments:
   - header - Header text to display in the table
   - dataKey - key to use from the top level item, `.` can be used to go deeper into the object
   - asImage - if true an img with the returned value as the src is returned
+  - sorts - array of string values that can be passed with a 'sort' param on the endPoint

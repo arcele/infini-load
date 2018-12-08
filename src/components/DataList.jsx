@@ -25,7 +25,7 @@ class DataList extends Component {
   }
 
   handleScroll(e) {
-    if(window.document.body.offsetHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
+    if(window.document.body.scrollHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
       this.loadItems()
     }
   }

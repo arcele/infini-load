@@ -44,10 +44,7 @@ class DataList extends Component {
   }
 
   loadItems() {
-    var uri = `${this.props.endPoint}?
-      limit=${this.props.limit}&
-      offset=${this.state.items.length}&
-      sort=${this.props.sorts[this.state.sort]}`
+    var uri = `${this.props.endPoint}?limit=${this.props.limit}&offset=${this.state.items.length}&sort=${this.props.sorts[this.state.sort]}`
     this.setState({fetching:true})
     fetch(uri)
       .then(res => res.json())
@@ -126,20 +123,10 @@ class DataList extends Component {
             { this.renderFilters() }
           </div>
         </div>
-       <div className="dataListWrapper">
-         { this.state.items.map(item => (
-                this.renderCard(item)
-              )
-            )
-          }
+        <div className="dataListWrapper">
+          { this.state.items.map(item => (this.renderCard(item)) )}
           { this.state.fetching && 
-            <Card>
-              <CardMedia>
-                <div>
-                  <CircularProgress className="spinner" size={125} thickness={10} />
-                </div>
-              </CardMedia>
-            </Card>
+            <CircularProgress className="spinner" size={125} thickness={10} />
           }
         </div>
       </div>

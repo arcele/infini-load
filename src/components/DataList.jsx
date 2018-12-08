@@ -6,7 +6,9 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import Snackbar from 'material-ui/Snackbar';
 
+const MAX_FAILURES = 5
 
 class DataList extends Component {
 
@@ -15,6 +17,7 @@ class DataList extends Component {
     this.state = {
       fetching: false,
       sort: 0,
+      failures: 0,
       items: []
     }
   }
@@ -29,7 +32,7 @@ class DataList extends Component {
   }
 
   handleScroll(e) {
-    if(window.document.body.scrollHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
+    if(window.document.body.scrollHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching && this.state.failures < MAX_FAILURES) {
       this.loadItems()
     }
   }
@@ -58,7 +61,7 @@ class DataList extends Component {
       })
       .catch((err) => {
         // if our scroll fails, reset fetching status to allow infini-scroll to try again
-        this.setState({fetching:false})
+        this.setState({fetching:false, failures: this.state.failures + 1})
       })   
   }
 
@@ -133,6 +136,11 @@ class DataList extends Component {
             <CircularProgress className="spinner" size={125} thickness={10} />
           }
         </div>
+        <Snackbar
+          open={this.state.failures >= MAX_FAILURES || (this.state.failures > 0 && this.state.items.length === 0) }
+          message="There is a problem communicating with the server.  Check your connection and try again."
+          bodyStyle={{backgroundColor: 'red'}}
+        />
       </div>
     )
   }

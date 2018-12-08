@@ -8,9 +8,11 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Toggle from 'material-ui/Toggle';
+import {Card, CardMedia, CardTitle } from 'material-ui/Card';
+import SortIcon from 'material-ui/svg-icons/content/sort'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 
 
 class DataList extends Component {
@@ -19,6 +21,7 @@ class DataList extends Component {
     super(props)
     this.state = {
       fetching: false,
+      sort: 0,
       items: []
     }
   }
@@ -48,7 +51,10 @@ class DataList extends Component {
   }
 
   loadItems() {
-    var uri = `${this.props.endPoint}?limit=${this.props.limit}&offset=${this.state.items.length}&sort=recent`
+    var uri = `${this.props.endPoint}?
+      limit=${this.props.limit}&
+      offset=${this.state.items.length}&
+      sort=${this.props.sorts[this.state.sort]}`
     this.setState({fetching:true})
     fetch(uri)
       .then(res => res.json())
@@ -113,17 +119,46 @@ class DataList extends Component {
 
   renderCard(item) {
     return(
-        <Card key={item.id} expanded={true} className="item-card">         
+      <div key={item.id}>
+        <Card expanded={true} className="item-card">         
           <CardMedia overlay={<CardTitle title={item.title} subtitle={item.description} />} expandable={true}>
-            <img src={item.profile.cover.url} />
+            <img src={item.profile.cover.url} alt={item.title} />
           </CardMedia>
         </Card>
+      </div>
+    )
+  }
+
+  handleFilterChange(event, value) {
+    this.setState({
+      sort:value,
+      items:[]
+    })
+    this.loadItems()
+  }
+
+  renderFilters() {
+    return(
+      <Card>
+        <IconMenu iconButtonElement={<IconButton><SortIcon /></IconButton>}
+          onChange={this.handleFilterChange.bind(this)}
+          value={this.state.sort}
+        >
+          { this.props.sorts.map((sort, i) => {
+            return(
+              <MenuItem key={`sort-${i}`}value={i} primaryText={sort} />
+            )
+          }) }
+        </IconMenu>
+        <span>Sorted By {this.props.sorts[this.state.sort]}</span>
+      </Card>
     )
   }
 
   render() {
     return(
       <div>
+        { this.renderFilters() }
         { this.state.items.map(item => (
               this.renderCard(item)
             )
@@ -132,7 +167,9 @@ class DataList extends Component {
       { this.state.fetching && 
         <Card>
           <CardMedia>
-            <CircularProgress className="spinner" size={125} thickness={10} />
+            <div>
+              <CircularProgress className="spinner" size={125} thickness={10} />
+            </div>
           </CardMedia>
         </Card>
       }

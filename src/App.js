@@ -13,14 +13,18 @@ class App extends Component {
       {'header':'Title', 'dataKey': 'title'},
       {'header':'Description', 'dataKey': 'description'}
     ]
+    const sortColumns = [
+      'recent', 'comments', 'likes', 'views', 'popular'
+    ]
+
     const first = 0
 
     return (
       <MuiThemeProvider>
-        <div>
+        <div id="App">
           <img src="/logo_portfolium_blue.svg" alt="Portfolium" className="logo" />
           <div className="dataListWrapper">
-            <DataList endPoint={endPoint} limit={limit} first={first} columns={columns} />
+            <DataList endPoint={endPoint} limit={limit} first={first} columns={columns} sorts={sortColumns} />
           </div>
         </div>
       </MuiThemeProvider>

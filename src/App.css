@@ -1,3 +1,8 @@
+#App {
+  width:640px;
+  margin:auto;
+}
+
 .logo {
   margin-top: 10px;
   margin-left: 15px;
@@ -12,12 +17,8 @@
   margin:8px 0px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 .dataListWrapper {
-  width:640px;
-  margin:auto;
+  width:100%;
+  heigth:500px;
 }
 

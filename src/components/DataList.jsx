@@ -24,6 +24,10 @@ class DataList extends Component {
     window.addEventListener('scroll', this.handleScroll.bind(this))
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll.bind(this))
+  }
+
   handleScroll(e) {
     if(window.document.body.scrollHeight - window.scrollY - window.innerHeight < 300 && !this.state.fetching) {
       this.loadItems()

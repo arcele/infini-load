@@ -80,11 +80,15 @@ class DataList extends Component {
     return output
   }
 
+  cardClick(item) {
+    window.open(`http://portfolium.com/pp/${item.token}`)
+  }
+
   renderCard(item) {
     return(
-      <div key={item.id}>
-        <Card expanded={true} className="item-card">         
-          <CardMedia overlay={<CardTitle title={item.title} subtitle={item.description} />} expandable={true}>
+      <div key={item.id} onClick={this.cardClick.bind(this,item)}>
+        <Card className="item-card">         
+          <CardMedia expandable={false} overlay={<CardTitle title={item.title} subtitle={item.description} />} >
             <img src={item.profile.cover.url} alt={item.title} className="cover" />
           </CardMedia>
         </Card>
